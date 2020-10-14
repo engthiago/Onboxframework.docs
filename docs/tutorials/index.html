@@ -96,11 +96,10 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-
-<p><a href="https://onbox.visualstudio.com/Onbox%20Framework/_build/latest?definitionId=4&amp;branchName=master"><img src="https://onbox.visualstudio.com/Onbox%20Framework/_apis/build/status/Package%20Framework?branchName=master" alt="Build Status"></a> <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a></p>
 <h1 id="welcome-to-onbox-framework">Welcome to Onbox Framework</h1>
+
 <p>Onbox is a <strong>free and open source</strong> framework to help you build modern cross platform <a href="https://www.autodesk.com.au/products/revit/overview?plc=RVT&amp;term=1-YEAR&amp;support=ADVANCED&amp;quantity=1">Revit</a> applications in a similar fashion of <a href="https://angular.io/">Angular</a> and <a href="https://dotnet.microsoft.com/apps/aspnet">ASP.Net core</a>.</p>
-<p>The framework and its libraries are designed focusing on modularity, testability and code reuse, it is heavly inspired in modern front end and back end web development, to help you transition from platform to platform without major workflow disruption.</p>
+<p>The framework and its libraries are designed focusing on modularity, testability and code reuse, it is heavly inspired in modern front end and back end web development, to help you transition from platform to platform without major workflow disruptions.</p>
 <h2 id="compatibility">Compatibility</h2>
 <p>Revit 2019, .NetStandard 2.0, and .Net Framework 4.7.2 or later.</p>
 <h2 id="getting-started">Getting Started</h2>
@@ -169,17 +168,17 @@
 </tbody>
 </table>
 <h2 id="dependencies">Dependencies</h2>
-<p>The philosophy behind Onbox is to keep dependencies to minimun, so the only runtime dependency aside from Revit and .Net is <a href="https://www.newtonsoft.com/json">Newtonsoft.Json</a> which ships with Revit anyway.</p>
-<p>The MVC libraries also requires <a href="https://github.com/Fody/PropertyChanged">PropertyChanged.Fody</a> to automatically call <a href="https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.inotifypropertychanged.propertychanged?view=netframework-4.7.2">PropertyChanged Event</a> to update the UI when a binding changes. This dependency is only required at compile time.</p>
+<p>The philosophy behind Onbox is to keep dependencies to minimum, so the only runtime dependency aside from Revit and .Net is <a href="https://www.newtonsoft.com/json">Newtonsoft.Json</a>, which ships with Revit anyway.</p>
+<p>The MVC libraries also require <a href="https://github.com/Fody/PropertyChanged">PropertyChanged.Fody</a> to automatically call <a href="https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.inotifypropertychanged.propertychanged?view=netframework-4.7.2">PropertyChanged Event</a> to update the UI when a binding changes. This dependency is only required at compile time though.</p>
 <h2 id="ui">UI</h2>
 <p>For the UI design pattern, Onbox ships with <strong>WPF MVC</strong> libraries, this choice was made because of the powerful and ease to use WPF's <a href="https://docs.microsoft.com/en-us/dotnet/desktop/wpf/data/data-binding-overview?view=netdesktop-5.0">Data Binding System</a> and the popularity of MVC in modern web frameworks. This approach modernizes Revit API programming and makes it easier for developers to switch from/to <a href="https://angular.io/">Angular</a> / <a href="https://dotnet.microsoft.com/apps/aspnet">ASP.Net core</a> / <a href="https://laravel.com/">Laravel</a> / <a href="https://spring.io/">Spring</a> when building apps that communicate with the cloud.</p>
-<p>With that being said, if you are using any other type of UI design pattern or layering e.g. WPF MVVM or even Windows Forms and like to keep it that way, you can absolutely do so by handling the UI interactions yourself and consume <code>Onbox.Revit</code>, <code>Onbox.Core</code>, and <code>Onbox.Di</code> with no reference to any Onbox's MVC libraries.</p>
+<p>With that being said, if you are using any other type of UI design pattern or layering e.g. WPF MVVM or even Windows Forms and like to keep it that way, you can absolutely do so by handling the UI interactions yourself, and consuming <code>Onbox.Revit</code>, <code>Onbox.Core</code>, and <code>Onbox.Di</code> with no reference to any Onbox's MVC libraries.</p>
 <h2 id="testing">Testing</h2>
-<p>Because of the need of having a valid Revit Context to interact with specific objects like Applications, Documents, and Elements, creating automated tests for Revit was always a big challange. Onbox ships with a dependency injection system, allowing developers to abstract away interfaces from their implementations, injecting then when and where they are needed on specific scoped services and therefore making it possible to mock and test these services independently.</p>
+<p>Because of the need of having a valid Revit Context to interact with specific objects like Applications, Documents, and Elements, creating automated tests for Revit was always a challange. Onbox ships with a dependency injection system, allowing developers to abstract away interfaces from their implementations, injecting then when and where they are needed on specific scopes, therefore making it possible to mock and test these classes independently.</p>
 <p>You could the automate your tests by using Dynamo's <a href="https://github.com/DynamoDS/RevitTestFramework">RevitTestFramework</a> or Geberit's <a href="https://github.com/geberit/Revit.TestRunner">Revit.TestRunner</a>.</p>
 <h2 id="versioning">Versioning</h2>
-<p>All libraries within Onbox have versioning namespaces to avoid <a href="https://thebuildingcoder.typepad.com/blog/2017/06/handling-third-party-library-dll-conflicts.html">Revit dll conficts</a>. While this aproach solves the issue of <a href="https://archi-lab.net/dll-hell-is-real/">dll hell</a> it also means that the framework needs to be more conservative on its versioning sytem. The namespaces will jump from integer version numbers instead of semantic versioning.</p>
-<p>Updating from one version to another will require you to update your using directives too, changing from version 7 to version 8 would be:</p>
+<p>All libraries within Onbox have versioning namespaces to avoid <a href="https://thebuildingcoder.typepad.com/blog/2017/06/handling-third-party-library-dll-conflicts.html">Revit dll conficts</a>. While this aproach solves the issue of <a href="https://archi-lab.net/dll-hell-is-real/">dll hell</a> and enables different versions of the libraries to co-exist within the same Revit session, it also means that the framework needs to be more conservative on its versioning sytem. The namespaces will jump from integer numbers instead of semantic versioning.</p>
+<p>Updating from one version to another will require you to update your using directives too, as an example, changing from version 7 to version 8 would be:</p>
 <pre><code class="lang-C#">using Onbox.Abstractions.V7;
 using Onbox.Revit.V7.Commands;
 </code></pre>
@@ -188,7 +187,7 @@ using Onbox.Revit.V7.Commands;
 using Onbox.Revit.V8.Commands;
 </code></pre>
 <h2 id="how-to-contribute">How to Contribute</h2>
-<p>Feel free to create github issues and make pull-requests.</p>
+<p>Since the framwork is open source, feel free to fork the code, create log issues and make pull-requests. Constructive feedback is also highly appreciated.</p>
 </article>
           </div>
           
@@ -197,7 +196,7 @@ using Onbox.Revit.V8.Commands;
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/engthiago/Onbox.Rvt/blob/master/docfx/tutorials/index.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/engthiago/Onboxframework/blob/master/docfx/tutorials/index.md/#L1" class="contribution-link">Improve this Doc</a>
                   </li>
                 </ul>
               </div>
