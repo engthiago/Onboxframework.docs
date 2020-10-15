@@ -1,0 +1,208 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Getting Started - Creating your first app </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Getting Started - Creating your first app ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc">
+    <meta property="docfx:tocrel" content="toc">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+                
+                <ul class="nav level1 navbar-nav">
+                      <li>
+                          <a href="../tutorials/index.html" title="Tutorials">Tutorials</a>
+                      </li>
+                      <li>
+                          <a href="../api/Onbox.Abstractions.V8.html" title="Api Documentation">Api Documentation</a>
+                      </li>
+                </ul>    </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div>
+              <div class="sidefilter">
+                <form class="toc-filter">
+                  <span class="glyphicon glyphicon-filter filter-icon"></span>
+                  <input type="text" id="toc_filter_input" placeholder="Enter here to filter..." onkeypress="if(event.keyCode==13) {return false;}">
+                </form>
+              </div>
+              <div class="sidetoc">
+                <div class="toc" id="toc">
+                  
+                  <ul class="nav level1">
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a href="index.html" title="Introduction" class="">Introduction</a>
+                        
+                        <ul class="nav level2">
+                          <li class="active">
+                            <span class="expand-stub"></span>
+                            <a href="1_guetstart.html" title="Getting Started" class="active">Getting Started</a>
+                              
+                              <ul class="nav level3">
+                                <li class="">
+                                  <a href="1_1_application.html" title="Application" class="">Application</a>
+                                </li>
+                                <li class="">
+                                  <a href="1_2_commands.html" title="Commands" class="">Commands</a>
+                                </li>
+                                <li class="">
+                                  <a href="1_3_views_mvc.html" title="Views and MVC" class="">Views and MVC</a>
+                                </li>
+                              </ul>  </li>
+                        </ul>  </li>
+                  </ul>        </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="getting-started---creating-your-first-app">Getting Started - Creating your first app</h1>
+
+<p>On this getting started guide we will help you explore how to create a simple Revit Application using Onbox framework, we will launch the app and explore its main components while showing you some the main concepts and how it differs from regular Revit API programming.</p>
+<p>This guide assumes that you have installed:</p>
+<ul>
+<li>Revit &gt;= 2019</li>
+<li>.NetStandard &gt;= 2.0</li>
+<li>.Net Framework &gt;= 4.7.2</li>
+<li>Visual Studio 2019</li>
+</ul>
+<h2 id="download-visual-studio-templates">Download Visual Studio Templates</h2>
+<p>Click <a href="https://github.com/engthiago/Onboxframework.docs/releases">here</a> to download the templates for the version of the framwork you are using.</p>
+<h2 id="install-the-templates">Install the Templates</h2>
+<ol>
+<li>First, make sure Visual Studio is not running, then unzip the contents on <em>%userprofile%\Documents\Visual Studio 2019</em> folder.</li>
+</ol>
+<p><img src="../images/GettingStarted_1.jpg" alt="alt text" title="Visual Studio Templates Folder"></p>
+<ol start="2">
+<li>The resulting folder structure will be something like this for the ProjectTemplates folder:</li>
+</ol>
+<p><img src="../images/GettingStarted_2.jpg" alt="alt text" title="Visual Studio Templates Folder"></p>
+<h2 id="launch-visual-studio">Launch Visual Studio</h2>
+<ol start="3">
+<li>Launch Visual Studio and click on <strong>&quot;Create a new project&quot;</strong></li>
+</ol>
+<p><img src="../images/GettingStarted_3.jpg" alt="alt text" title="Visual Studio Templates Folder"></p>
+<ol start="4">
+<li>On Platform drop down menu, choose Revit and then pick <strong>&quot;Onbox MVC - APP&quot;</strong></li>
+</ol>
+<p><img src="../images/GettingStarted_4.jpg" alt="alt text" title="Visual Studio Templates Folder"></p>
+<ol start="5">
+<li>Type your project name and click <strong>&quot;Create&quot;</strong></li>
+</ol>
+<p><img src="../images/GettingStarted_5.jpg" alt="alt text" title="Visual Studio Templates Folder"></p>
+<h2 id="launch-your-app">Launch your App</h2>
+<blockquote>
+<p>⚠️ <strong>Heads Up:</strong> Sometimes Visual Studio will complain when you try to build the solution for the first time, this happens, apperently because of a bug on PropertyChanged.Fody when referenced by Nuget. If you get build errors in the next step, click on Build -&gt; Clean Solution and try to Run the Solution again. Once the packages are downloaded you should not have this issue anymore.</p>
+</blockquote>
+<ol>
+<li><p>This step also assumes that your Revit is installed on the default C:/Program Files/ Revit folder, if not, please change this patch on Visual Studio: Project Properties -&gt; Debug tab.</p>
+</li>
+<li><p>Choose a Revit Version on the Solution Configuration Drop down menu and hit <strong>&quot;Start&quot;</strong></p>
+</li>
+</ol>
+<p><img src="../images/GettingStarted_6.jpg" alt="alt text" title="Visual Studio Templates Folder"></p>
+<ol start="3">
+<li>Accept the loading of the Addin:</li>
+</ol>
+<p><img src="../images/GettingStarted_7.jpg" alt="alt text" title="Visual Studio Templates Folder"></p>
+<ol start="4">
+<li>After Launching Revit, open or create a project and you will see a new Ribbon tab with two buttons:</li>
+</ol>
+<p><img src="../images/GettingStarted_8.jpg" alt="alt text" title="Visual Studio Templates Folder"></p>
+<ol start="5">
+<li>Clicking in the button <strong>&quot;Hello WPF&quot;</strong> this dialog will pop up:
+<img src="../images/GettingStarted_9.jpg" alt="alt text" title="Visual Studio Templates Folder"></li>
+</ol>
+<h1 id="conclusion">Conclusion</h1>
+<p>Congratulations! ou have your first application up and running, now it is time to dive deeper and undestand what is going on on the background. Click <a href="1_1_application.html">here</a> to continue this tutorial.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/engthiago/Onboxframework/blob/master/docfx/tutorials/1_guetstart.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,182 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Commands </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Commands ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc">
+    <meta property="docfx:tocrel" content="toc">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+                
+                <ul class="nav level1 navbar-nav">
+                      <li>
+                          <a href="../tutorials/index.html" title="Tutorials">Tutorials</a>
+                      </li>
+                      <li>
+                          <a href="../api/Onbox.Abstractions.V8.html" title="Api Documentation">Api Documentation</a>
+                      </li>
+                </ul>    </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div>
+              <div class="sidefilter">
+                <form class="toc-filter">
+                  <span class="glyphicon glyphicon-filter filter-icon"></span>
+                  <input type="text" id="toc_filter_input" placeholder="Enter here to filter..." onkeypress="if(event.keyCode==13) {return false;}">
+                </form>
+              </div>
+              <div class="sidetoc">
+                <div class="toc" id="toc">
+                  
+                  <ul class="nav level1">
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a href="index.html" title="Introduction" class="">Introduction</a>
+                        
+                        <ul class="nav level2">
+                          <li class="">
+                            <span class="expand-stub"></span>
+                            <a href="1_guetstart.html" title="Getting Started" class="">Getting Started</a>
+                              
+                              <ul class="nav level3">
+                                <li class="">
+                                  <a href="1_1_application.html" title="Application" class="">Application</a>
+                                </li>
+                                <li class="active">
+                                  <a href="1_2_commands.html" title="Commands" class="active">Commands</a>
+                                </li>
+                                <li class="">
+                                  <a href="1_3_views_mvc.html" title="Views and MVC" class="">Views and MVC</a>
+                                </li>
+                              </ul>  </li>
+                        </ul>  </li>
+                  </ul>        </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="commands">Commands</h1>
+
+<p>Onbox have two main Revit Command implementations:</p>
+<ul>
+<li><code>RevitContainerCommand</code> - An indepentend command that will instantiate its own container.</li>
+<li><code>RevitAppCommand</code> - A Command that will hook itself to an Application and use a scoped version of its container.</li>
+</ul>
+<h2 id="exploring-hellocommand">Exploring &quot;HelloCommand&quot;</h2>
+<ol>
+<li>For this tutorial, we are focusing on the later. Double click on <strong>HelloCommand.cs</strong> under <strong>Revit-&gt;Commands</strong> folder on Visual Studio.</li>
+</ol>
+<p>Again we find some similarities between regular Revit API programming, this looks almost exactly like a <code>IRevitExternalCommand</code>:</p>
+<pre><code class="lang-C#">    [Transaction(TransactionMode.Manual)]
+    public class HelloCommand : RevitAppCommand&lt;App&gt;
+    {
+        public override Result Execute(IContainerResolver container, ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            // Asks the container for a new instance a message service
+            var messageService = container.Resolve&lt;IMessageService&gt;();
+            messageService.Show(&quot;Hello Onbox Framework!&quot;);
+
+            return Result.Succeeded;
+        }
+    }
+</code></pre>
+<p>Notice that it derives from RevitAppCommand passing in our app type as its parent application. As stated before, this hooks IOC Container from the app to the command and any type registered on <code>App.Startup</code> will be available here through the injected <code>IContainerResolver</code> argument.</p>
+<p>Other benefits to maintain a strongly typed relationship between a command and its app is that makes it easier to refactor or navigate back and forth during development.</p>
+<p><code>container.Resolve&lt;IMessageService&gt;</code> asks the container for a new instance of IMessageService interface, the container knows how to instantiate this service because it has been registered on <code>App.Startup</code>. Remember when we were exploring this method, we saw that this template comes with <code>MessageBoxService</code> type registered as a <code>IMessageService</code>? The clever part of inversion of control is if we want to change the implementation of this service, it is just of matter of changing the registration on <code>App.Startup</code>, not in potentially hundreds or thousands places that is used on a large scale project.</p>
+<p>Here is the dialog that shows when you click on <strong>&quot;Hello Framework&quot;</strong> in the Ribbon.</p>
+<p><img src="../images/GettingStarted_12.jpg" alt="alt text" title="Hello Onbox Framework"></p>
+<h2 id="conclusion">Conclusion</h2>
+<p>The basic idea behind what we saw until now is register and resolve, we first tell the container about the abstractions and implementations we will be using during our application's lifetime. The container will then take the responsability of instantiating these types for us, making the application easier to code, debug, refactor, test and much more!</p>
+<p>Okay, lets talk a bit about <a href="1_3_views_mvc.html">WPF Views and MVC</a> now.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/engthiago/Onboxframework/blob/master/docfx/tutorials/1_2_commands.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

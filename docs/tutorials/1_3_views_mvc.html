@@ -1,0 +1,227 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>WPF Views and MVC </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="WPF Views and MVC ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc">
+    <meta property="docfx:tocrel" content="toc">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+                
+                <ul class="nav level1 navbar-nav">
+                      <li>
+                          <a href="../tutorials/index.html" title="Tutorials">Tutorials</a>
+                      </li>
+                      <li>
+                          <a href="../api/Onbox.Abstractions.V8.html" title="Api Documentation">Api Documentation</a>
+                      </li>
+                </ul>    </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div>
+              <div class="sidefilter">
+                <form class="toc-filter">
+                  <span class="glyphicon glyphicon-filter filter-icon"></span>
+                  <input type="text" id="toc_filter_input" placeholder="Enter here to filter..." onkeypress="if(event.keyCode==13) {return false;}">
+                </form>
+              </div>
+              <div class="sidetoc">
+                <div class="toc" id="toc">
+                  
+                  <ul class="nav level1">
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a href="index.html" title="Introduction" class="">Introduction</a>
+                        
+                        <ul class="nav level2">
+                          <li class="">
+                            <span class="expand-stub"></span>
+                            <a href="1_guetstart.html" title="Getting Started" class="">Getting Started</a>
+                              
+                              <ul class="nav level3">
+                                <li class="">
+                                  <a href="1_1_application.html" title="Application" class="">Application</a>
+                                </li>
+                                <li class="">
+                                  <a href="1_2_commands.html" title="Commands" class="">Commands</a>
+                                </li>
+                                <li class="active">
+                                  <a href="1_3_views_mvc.html" title="Views and MVC" class="active">Views and MVC</a>
+                                </li>
+                              </ul>  </li>
+                        </ul>  </li>
+                  </ul>        </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="wpf-views-and-mvc">WPF Views and MVC</h1>
+
+<p>Onbox ships with some MVC libraries based on WPF by default and it provides a lot of features out the box like:</p>
+<ul>
+<li>Hooks up to Revit main window handler automatically.</li>
+<li>Resolves View instances using IOC Container.</li>
+<li>Lifecycle hooks: <code>OnInit</code>, <code>OnInitAsync</code>, <code>RunOnInitFunc</code>, <code>OnAfterInit</code>, and <code>OnDestroy</code>.</li>
+<li>Provides interceptor for <code>CanClose</code> dialog.</li>
+<li>Provides functionality for async load resources, like http calls, hooking up loading spinners, error icons and ability to hide its contents depending on error or load states.</li>
+<li>Provides navigation functionality.</li>
+<li>Progress indicator that works nicely with Revit's threading particularities.</li>
+<li>Adds some cool custom components that have Revit's &quot;look and feel&quot;.</li>
+</ul>
+<p>The main <code>Onbox.MVC</code> library is designed with Revit in mind but it can actually be used on any regular Windows WPF application as it has no refence to Revit on its code. In the other hand <code>Onbox.MVC.Revit</code> provides functionality specific Revit functionality like the progress indicator mentioned above.</p>
+<h2 id="exploring-hellowpfview-window">Exploring &quot;HelloWPFView&quot; Window</h2>
+<ol>
+<li>Going back to Visual Studio, open <strong>WPFViewCommand.cs</strong> under <strong>Revit-&gt;Commands</strong> folder. This command is very similar to the one we explored before, it is just showing a WPF abstracted window instead:</li>
+</ol>
+<pre><code class="lang-C#">    [Transaction(TransactionMode.Manual)]
+    public class WPFViewCommand : RevitAppCommand&lt;App&gt;
+    {
+        public override Result Execute(IContainerResolver container, ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            // Asks the container for a new instance of a view
+            var wpfView = container.Resolve&lt;IHelloWpfView&gt;();
+            wpfView.ShowDialog();
+
+            return Result.Succeeded;
+        }
+    }
+</code></pre>
+<ol start="2">
+<li>Now go to <strong>Views</strong> folder and open <strong>HellopWPFView.xaml</strong>. This view is very similar to a regular WPF view but instead of deriving from <code>Window</code> it derives from <code>RevitMvcViewBase</code>.</li>
+</ol>
+<pre><code class="lang-C#">&lt;rmvc:RevitMvcViewBase x:Class=&quot;MyFirstOnboxRevitApp.Views.HelloWpfView&quot;
+					   DataContext=&quot;{Binding RelativeSource={RelativeSource Self}}&quot;
+					   xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+					   xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+
+                       //... Omitted to fit in this documentation
+</code></pre>
+<ol start="3">
+<li>Hit <strong>F7</strong> on your keyboard to access this view`s code behind. Notice that we have an interface to define the abstraction for HellopWpfView:</li>
+</ol>
+<pre><code class="lang-C#">
+    /// &lt;summary&gt;
+    /// A contract a view designed to have Revit as parent window
+    /// &lt;/summary&gt;
+    public interface IHelloWpfView : IRevitMvcViewBase, IMvcViewModal
+    {
+    }
+
+</code></pre>
+<p>Idealy this interface should be moved to another project where you will maintain all the abstractions for your application, Onbox will pre-define this interface, but it is up to the developer to move it to where it should be depending on the application's architecture.</p>
+<ol start="4">
+<li>Have a look on the <code>HelloWpfView</code> partial class:</li>
+</ol>
+<pre><code class="lang-C#">
+    /// &lt;summary&gt;
+    /// A view designed to have Revit as parent window
+    /// &lt;/summary&gt;
+    public partial class HelloWpfView : RevitMvcViewBase, IHelloWpfView
+    {
+        public string AppName { get; set; }
+
+        // You can inject any service that you have added to the container in constructors
+        public HelloWpfView(IRevitAppData revitAppData) : base(revitAppData)
+        {
+            InitializeComponent();
+            AppName = Assembly.GetExecutingAssembly().GetName().Name;
+        }
+    }
+
+</code></pre>
+<p>You can see that the constructor for this class takes an <code>IRevitAppData</code> that the container injects for us. This helps you get information about Revit's running process and to hook up this View to Revit main Window handler.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Congratulations! Now you have the basic knowlodge of how Onbox works, you have explored some of its functionalities and hopefuly are starting to grasp some of its benefits. If you are a seasoned Web Developer, all these must be very familiar to you, if you only surfed the waters of Revit API or is fairly new to programming, you might be a bit lost, but don't give up, there are indeed lots of great things comming for you.</p>
+<p>And... our journey doesn't end here, let's build something new now!</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/engthiago/Onboxframework/blob/master/docfx/tutorials/1_3_views_mvc.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
