@@ -3,12 +3,8 @@ Source code can be found [here](https://github.com/engthiago/Onboxframework).
 
 # Getting Started
 
-Click [here](tutorials/1_guetstart.md) to get started.
+Click [here](https://engthiago.github.io/Onboxframework.docs/tutorials/1_guetstart.html) to get started.
 
-# Articles, Guides and Tutorials
+# Get to know Onbox Framework
 
-Click [here](tutorials/index.md) to go to tutorials.
-
-# Api Documentation
-
-Click [here](api/index.md) to go to Api Docs.
+Click [here](https://engthiago.github.io/Onboxframework.docs/tutorials/index.html) have an overview look of Onbox.
