@@ -47,6 +47,9 @@
                 
                 <ul class="nav level1 navbar-nav">
                       <li>
+                          <a href="../tutorials/1_guetstart.html" title="Getting Started">Getting Started</a>
+                      </li>
+                      <li>
                           <a href="../tutorials/index.html" title="Tutorials">Tutorials</a>
                       </li>
                       <li>
@@ -99,6 +102,75 @@
                                   <a href="1_3_views_mvc.html" title="Views and MVC" class="">Views and MVC</a>
                                 </li>
                               </ul>  </li>
+                          <li class="">
+                            <span class="expand-stub"></span>
+                            <a href="2_main_concepts.html" title="Main Concepts" class="">Main Concepts</a>
+                              
+                              <ul class="nav level3">
+                                <li class="">
+                                  <a href="2_1_inversion_of_control.html" title="Inversion of Control" class="">Inversion of Control</a>
+                                </li>
+                                <li class="">
+                                  <a href="2_2_separation_concerns.html" title="Separation of Concerns" class="">Separation of Concerns</a>
+                                </li>
+                                <li class="">
+                                  <a href="2_3_modularity.html" title="Modularity" class="">Modularity</a>
+                                </li>
+                                <li class="">
+                                  <a href="2_4_immutability.html" title="Immutability" class="">Immutability</a>
+                                </li>
+                                <li class="">
+                                  <a href="2_5_testability.html" title="Testability" class="">Testability</a>
+                                </li>
+                                <li class="">
+                                  <a href="2_6_versioning.html" title="Versioning" class="">Versioning</a>
+                                </li>
+                              </ul>  </li>
+                          <li class="">
+                            <span class="expand-stub"></span>
+                            <a href="3_ioc_container.html" title="IOC Container" class="">IOC Container</a>
+                              
+                              <ul class="nav level3">
+                                <li class="">
+                                  <a href="3_1_container_registration.html" title="Container Registration" class="">Container Registration</a>
+                                </li>
+                                <li class="">
+                                  <a href="3_2_container_resolve.html" title="Container Resolve" class="">Container Resolve</a>
+                                </li>
+                                <li class="">
+                                  <a href="3_3_container_scopes.html" title="Container Scopes" class="">Container Scopes</a>
+                                </li>
+                                <li class="">
+                                  <a href="3_4_pipeline.html" title="Container Scopes" class="">Container Scopes</a>
+                                </li>
+                              </ul>  </li>
+                          <li class="">
+                            <a href="4_mapping_cloning.html" title="Mapping and Cloning" class="">Mapping and Cloning</a>
+                          </li>
+                          <li class="">
+                            <a href="5_httpclient.html" title="Http Client" class="">Http Client</a>
+                          </li>
+                          <li class="">
+                            <a href="6_logging.html" title="Logging" class="">Logging</a>
+                          </li>
+                          <li class="">
+                            <a href="7_messaging.html" title="Messaging" class="">Messaging</a>
+                          </li>
+                          <li class="">
+                            <a href="8_json_serialization.html" title="Json Serialization" class="">Json Serialization</a>
+                          </li>
+                          <li class="">
+                            <a href="9_progress.html" title="Progress Indication" class="">Progress Indication</a>
+                          </li>
+                          <li class="">
+                            <a href="10_mvc.html" title="MVC" class="">MVC</a>
+                          </li>
+                          <li class="">
+                            <a href="11_store.html" title="State Management" class="">State Management</a>
+                          </li>
+                          <li class="">
+                            <a href="12_storage.html" title="Extensible Storage" class="">Extensible Storage</a>
+                          </li>
                         </ul>  </li>
                   </ul>        </div>
               </div>
@@ -123,64 +195,57 @@
 </ol>
 <p>App.cs is the entry point of our application, here you will also define the lifecycle hooks for creating the app and integrating it with Revit. If you are used to Revit API programming this will look somewhat familiar to you, but some changes are evident. Notice that we derive from <code>RevitApp</code> base class, not <code>IExternalApplication</code>. This adds functionality to our application and uses the <code>ContainerProvider</code> class to unique identify the container context from other applications.</p>
 <p>The implementations are ommited to better fit this documentation.</p>
-<pre><code class="lang-C#"> [ContainerProvider(&quot;12566691-949c-4ab8-a64d-a67991adbe93&quot;)] // This is generated when you create the VS project
- public class App : RevitApp
+<pre><code class="lang-C#">[ContainerProvider(&quot;12566691-949c-4ab8-a64d-a67991adbe93&quot;)] / This is generated when you create the VS project
+public class App : RevitApp
+{
+ public override void OnCreateRibbon(IRibbonManager  ribbonManager)
  {
-     public override void OnCreateRibbon(IRibbonManager ribbonManager)
-     {
-         // Here you can create Ribbon tabs, panels and buttons
-         ...Rest of method implementation
-     }
-
-     public override Result OnStartup(IContainer container, UIControlledApplication application)
-     {
-         // Here you can add all necessary dependencies to the container
-         ...Rest of method implementation
-     }
-
-     public override Result OnShutdown(IContainerResolver container, UIControlledApplication application)
-     {
-         // No Need to cleanup the Container, the framework will do it for you
-         return Result.Succeeded;
-     }
+     // Here you can create Ribbon tabs, panels and buttons
+     ...Rest of method implementation
  }
+ public override Result OnStartup(IContainer container,  UIControlledApplication application)
+ {
+     // Here you can add all necessary dependencies to the container
+     ...Rest of method implementation
+ }
+ public override Result OnShutdown(IContainerResolver    container, UIControlledApplication application)
+ {
+     // No Need to cleanup the Container, the framework will do it for you
+     return Result.Succeeded;
+ }
+}
 </code></pre>
 <p><code>OnCreateRibbon</code> passes in a <code>IRibbonManager</code> interface. This manager is used to, as the name suggest, create Ribbon tabs, panels, buttons, etc. The method itself is used to separate the logic of UI than actually doing container logic.</p>
-<p>The biggest benefic here is to use cleaner code (less code too) to compose the Ribbon, most of the code is self explanatory, and you can hover over the method calls to see exactly what they are passing on. Also notice that <code>&quot;onbox_logo&quot;</code> and <code>&quot;autodesk_logo&quot;</code> refer to the Rescoures/RibbonImages folder on our project. Onbox uses convention base image size to button backgrounds, when you pass in <code>&quot;autodesk_logo&quot;</code> as an argument, the <code>IRibbonManager</code> implementation will try to find a resource called <em>autodesk_logo16.png&quot;</em> and <em>&quot;autodesk_logo32.png&quot;</em> as background resources images for that button.</p>
-<pre><code class="lang-C#">        public override void OnCreateRibbon(IRibbonManager ribbonManager)
-        {
-            // Here you can create Ribbon tabs, panels and buttons
-            var br = ribbonManager.GetLineBreak();
-
-            // Adds a Ribbon Panel to the Addins tab
-            var addinPanelManager = ribbonManager.CreatePanel(&quot;MyFirstOnboxRevitApp&quot;);
-            addinPanelManager.AddPushButton&lt;HelloCommand, AvailableOnProject&gt;($&quot;Hello{br}Framework&quot;, &quot;onbox_logo&quot;);
-
-            // Adds a new Ribbon Tab with a new Panel
-            var panelManager = ribbonManager.CreatePanel(&quot;MyFirstOnboxRevitApp&quot;, &quot;Hello Panel&quot;);
-            panelManager.AddPushButton&lt;HelloCommand, AvailableOnProject&gt;($&quot;Hello{br}Framework&quot;, &quot;onbox_logo&quot;);
-            panelManager.AddPushButton&lt;WPFViewCommand, AvailableOnProject&gt;($&quot;Hello{br}WPF&quot;, &quot;autodesk_logo&quot;);
-        }
+<p>The biggest benefic here is to use cleaner code (less code too) to compose the Ribbon. Most of the code is self explanatory, and you can hover over the method calls to see exactly what they are passing on. Also notice that <code>&quot;onbox_logo&quot;</code> and <code>&quot;autodesk_logo&quot;</code> refer to the Rescoures/RibbonImages folder on our project. Onbox uses convention base image size to button backgrounds, when you pass in <code>&quot;autodesk_logo&quot;</code> as an argument, the <code>IRibbonManager</code> implementation will try to find a resource called <em>autodesk_logo16.png&quot;</em> and <em>&quot;autodesk_logo32.png&quot;</em> as background resources images for that button.</p>
+<pre><code class="lang-C#">public override void OnCreateRibbon(IRibbonManagerribbonManager)
+{
+    // Here you can create Ribbon tabs, panels and buttons
+    var br = ribbonManager.GetLineBreak();
+    // Adds a Ribbon Panel to the Addins tab
+    var addinPanelManager = ribbonManager.CreatePanel(&quot;MyFirstOnboxRevitApp&quot;);
+    addinPanelManager.AddPushButton&lt;HelloCommand, AvailableOnProject&gt;($&quot;Hello{br}Framework&quot;, &quot;onbox_logo&quot;);
+    // Adds a new Ribbon Tab with a new Panel
+    var panelManager = ribbonManager.CreatePanel(&quot;MyFirstOnboxRevitApp&quot;, &quot;Hello Panel&quot;);
+    panelManager.AddPushButton&lt;HelloCommand, AvailableOnProject&gt;($&quot;Hello{br}Framework&quot;, &quot;onbox_logo&quot;);
+    panelManager.AddPushButton&lt;WPFViewCommand, AvailableOnProject&gt;($&quot;Hello{br}WPF&quot;, &quot;autodesk_logo&quot;);
+}
 </code></pre>
 <p>✔️ Having the ability to strong type Command and CommandAvailability is also very cool. Visual Studio will help you rename and navigate from Commands to their respective App!</p>
 <p><code>OnStartup</code> is where the framework injects its IOC container for the first time, here you have the ability to add all the necessary container logic.</p>
-<pre><code class="lang-C#">        public override Result OnStartup(IContainer container, UIControlledApplication application)
-        {
-            // Here you can add all necessary dependencies to the container
-            container.AddOnboxCore();
-            container.AddRevitMvc();
-
-            // Registers IWPFView to the container
-            // Views should ALWAYS be added as Transients
-            container.AddTransient&lt;IHelloWpfView, HelloWpfView&gt;();
-
-            // Adds MessageBoxService to the container
-            container.AddSingleton&lt;IMessageService, MessageBoxService&gt;();
-
-            return Result.Succeeded;
-        }
+<pre><code class="lang-C#">public override Result OnStartup(IContainer container,UIControlledApplication application)
+{
+    // Here you can add all necessary dependencies to the container
+    container.AddOnboxCore();
+    container.AddRevitMvc();
+    // Registers IWPFView to the container
+    // Views should ALWAYS be added as Transients
+    container.AddTransient&lt;IHelloWpfView, HelloWpfView&gt;();
+    // Adds MessageBoxService to the container
+    container.AddSingleton&lt;IMessageService, MessageBoxService&gt;();
+    return Result.Succeeded;
+}
 </code></pre>
-<p>If you are not familiar with the Inversion of control principle or IOC Containers, please have a look on this <a href="https://martinfowler.com/articles/injection.html">article</a> or this <a href="https://www.youtube.com/watch?v=QtDTfn8YxXg&amp;">video</a>, this is a very important concept for Onbox, it extensively uses this container throughout its libraries. Most of the work is done by the framework in the background, but it is good to know the advantages as it also changes the way you architecture you application and classes.</p>
+<p>If you are not familiar with the Inversion of control principle or IOC Containers, please have a look on this <a href="https://martinfowler.com/articles/injection.html">article</a> or this <a href="https://www.youtube.com/watch?v=QtDTfn8YxXg&amp;">video</a>, this is a very important concept for Onbox, it extensively uses this container throughout its libraries. Most of the work is done by the framework in the background, but it is good to know the advantages as it also changes the way you architecture your application and classes.</p>
 <p><code>container.AddOnboxCore</code> method call will add important core classes for dealing with Http requests, serialization, logging, mapping, and cloning of objects.</p>
 <p><code>container.AddRevitMvc</code> method call is adding UI/MVC support for the app, things like progress indicators, messaging service and navigation for WPF components.</p>
 <p><code>container.AddTransient&lt;IHelloWpfView, HelloWpfView&gt;</code> is adding that HelloWpfView that we opened previously, to the container. Notice that this is mapping an IHelloWpfView to abstract the interface to the actual View (Window) implementation, this is crucial for modularity and testability.</p>

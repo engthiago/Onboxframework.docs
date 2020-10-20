@@ -47,6 +47,9 @@
                 
                 <ul class="nav level1 navbar-nav">
                       <li>
+                          <a href="../tutorials/1_guetstart.html" title="Getting Started">Getting Started</a>
+                      </li>
+                      <li>
                           <a href="../tutorials/index.html" title="Tutorials">Tutorials</a>
                       </li>
                       <li>
@@ -99,6 +102,75 @@
                                   <a href="1_3_views_mvc.html" title="Views and MVC" class="active">Views and MVC</a>
                                 </li>
                               </ul>  </li>
+                          <li class="">
+                            <span class="expand-stub"></span>
+                            <a href="2_main_concepts.html" title="Main Concepts" class="">Main Concepts</a>
+                              
+                              <ul class="nav level3">
+                                <li class="">
+                                  <a href="2_1_inversion_of_control.html" title="Inversion of Control" class="">Inversion of Control</a>
+                                </li>
+                                <li class="">
+                                  <a href="2_2_separation_concerns.html" title="Separation of Concerns" class="">Separation of Concerns</a>
+                                </li>
+                                <li class="">
+                                  <a href="2_3_modularity.html" title="Modularity" class="">Modularity</a>
+                                </li>
+                                <li class="">
+                                  <a href="2_4_immutability.html" title="Immutability" class="">Immutability</a>
+                                </li>
+                                <li class="">
+                                  <a href="2_5_testability.html" title="Testability" class="">Testability</a>
+                                </li>
+                                <li class="">
+                                  <a href="2_6_versioning.html" title="Versioning" class="">Versioning</a>
+                                </li>
+                              </ul>  </li>
+                          <li class="">
+                            <span class="expand-stub"></span>
+                            <a href="3_ioc_container.html" title="IOC Container" class="">IOC Container</a>
+                              
+                              <ul class="nav level3">
+                                <li class="">
+                                  <a href="3_1_container_registration.html" title="Container Registration" class="">Container Registration</a>
+                                </li>
+                                <li class="">
+                                  <a href="3_2_container_resolve.html" title="Container Resolve" class="">Container Resolve</a>
+                                </li>
+                                <li class="">
+                                  <a href="3_3_container_scopes.html" title="Container Scopes" class="">Container Scopes</a>
+                                </li>
+                                <li class="">
+                                  <a href="3_4_pipeline.html" title="Container Scopes" class="">Container Scopes</a>
+                                </li>
+                              </ul>  </li>
+                          <li class="">
+                            <a href="4_mapping_cloning.html" title="Mapping and Cloning" class="">Mapping and Cloning</a>
+                          </li>
+                          <li class="">
+                            <a href="5_httpclient.html" title="Http Client" class="">Http Client</a>
+                          </li>
+                          <li class="">
+                            <a href="6_logging.html" title="Logging" class="">Logging</a>
+                          </li>
+                          <li class="">
+                            <a href="7_messaging.html" title="Messaging" class="">Messaging</a>
+                          </li>
+                          <li class="">
+                            <a href="8_json_serialization.html" title="Json Serialization" class="">Json Serialization</a>
+                          </li>
+                          <li class="">
+                            <a href="9_progress.html" title="Progress Indication" class="">Progress Indication</a>
+                          </li>
+                          <li class="">
+                            <a href="10_mvc.html" title="MVC" class="">MVC</a>
+                          </li>
+                          <li class="">
+                            <a href="11_store.html" title="State Management" class="">State Management</a>
+                          </li>
+                          <li class="">
+                            <a href="12_storage.html" title="Extensible Storage" class="">Extensible Storage</a>
+                          </li>
                         </ul>  </li>
                   </ul>        </div>
               </div>
@@ -126,39 +198,42 @@
 <ol>
 <li>Going back to Visual Studio, open <strong>WPFViewCommand.cs</strong> under <strong>Revit-&gt;Commands</strong> folder. This command is very similar to the one we explored before, it is just showing a WPF abstracted window instead:</li>
 </ol>
-<pre><code class="lang-C#">    [Transaction(TransactionMode.Manual)]
-    public class WPFViewCommand : RevitAppCommand&lt;App&gt;
+<pre><code class="lang-C#">
+[Transaction(TransactionMode.Manual)]
+public class WPFViewCommand : RevitAppCommand&lt;App&gt;
+{
+    public override Result Execute(IContainerResolver container, ExternalCommandData commandData, ref string message, ElementSet elements)
     {
-        public override Result Execute(IContainerResolver container, ExternalCommandData commandData, ref string message, ElementSet elements)
-        {
-            // Asks the container for a new instance of a view
-            var wpfView = container.Resolve&lt;IHelloWpfView&gt;();
-            wpfView.ShowDialog();
-
-            return Result.Succeeded;
-        }
+        // Asks the container for a new instance of a view
+        var wpfView = container.Resolve&lt;IHelloWpfView&gt;();
+        wpfView.ShowDialog();
+        return Result.Succeeded;
     }
+}
+
 </code></pre>
 <ol start="2">
 <li>Now go to <strong>Views</strong> folder and open <strong>HellopWPFView.xaml</strong>. This view is very similar to a regular WPF view but instead of deriving from <code>Window</code> it derives from <code>RevitMvcViewBase</code>.</li>
 </ol>
-<pre><code class="lang-C#">&lt;rmvc:RevitMvcViewBase x:Class=&quot;MyFirstOnboxRevitApp.Views.HelloWpfView&quot;
-					   DataContext=&quot;{Binding RelativeSource={RelativeSource Self}}&quot;
-					   xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
-					   xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+<pre><code class="lang-C#">
+&lt;rmvc:RevitMvcViewBase x:Class=&quot;MyFirstOnboxRevitApp.Views.HelloWpfView&quot;
+	DataContext=&quot;{Binding RelativeSource={RelativeSource Self}}&quot;
+	xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+	xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
 
-                       //... Omitted to fit in this documentation
+    //... Omitted to fit in this documentation
+
 </code></pre>
 <ol start="3">
 <li>Hit <strong>F7</strong> on your keyboard to access this view`s code behind. Notice that we have an interface to define the abstraction for HellopWpfView:</li>
 </ol>
 <pre><code class="lang-C#">
-    /// &lt;summary&gt;
-    /// A contract a view designed to have Revit as parent window
-    /// &lt;/summary&gt;
-    public interface IHelloWpfView : IRevitMvcViewBase, IMvcViewModal
-    {
-    }
+/// &lt;summary&gt;
+/// A contract a view designed to have Revit as parent window
+/// &lt;/summary&gt;
+public interface IHelloWpfView : IRevitMvcViewBase, IMvcViewModal
+{
+}
 
 </code></pre>
 <p>Idealy this interface should be moved to another project where you will maintain all the abstractions for your application, Onbox will pre-define this interface, but it is up to the developer to move it to where it should be depending on the application's architecture.</p>
@@ -166,25 +241,24 @@
 <li>Have a look on the <code>HelloWpfView</code> partial class:</li>
 </ol>
 <pre><code class="lang-C#">
-    /// &lt;summary&gt;
-    /// A view designed to have Revit as parent window
-    /// &lt;/summary&gt;
-    public partial class HelloWpfView : RevitMvcViewBase, IHelloWpfView
+/// &lt;summary&gt;
+/// A view designed to have Revit as parent window
+/// &lt;/summary&gt;
+public partial class HelloWpfView : RevitMvcViewBase, IHelloWpfView
+{
+    public string AppName { get; set; }
+    // You can inject any service that you have added to the container in constructors
+    public HelloWpfView(IRevitAppData revitAppData) : base(revitAppData)
     {
-        public string AppName { get; set; }
-
-        // You can inject any service that you have added to the container in constructors
-        public HelloWpfView(IRevitAppData revitAppData) : base(revitAppData)
-        {
-            InitializeComponent();
-            AppName = Assembly.GetExecutingAssembly().GetName().Name;
-        }
+        InitializeComponent();
+        AppName = Assembly.GetExecutingAssembly().GetName().Name;
     }
+}
 
 </code></pre>
 <p>You can see that the constructor for this class takes an <code>IRevitAppData</code> that the container injects for us. This helps you get information about Revit's running process and to hook up this View to Revit main Window handler.</p>
 <h2 id="conclusion">Conclusion</h2>
-<p>Congratulations! Now you have the basic knowlodge of how Onbox works, you have explored some of its functionalities and hopefuly are starting to grasp some of its benefits. If you are a seasoned Web Developer, all these must be very familiar to you, if you only surfed the waters of Revit API or is fairly new to programming, you might be a bit lost, but don't give up, there are indeed lots of great things comming for you.</p>
+<p>Congratulations! Now you have the basic knowlodge of how Onbox works, you have explored some of its functionalities and hopefuly are starting to grasp some of its benefits. If you are a seasoned Web Developer, all these must be very familiar to you, if you only surfed the waters of Revit API or is fairly new to programming you might be a bit lost, but don't give up, there are indeed lots of great things coming next.</p>
 <p>And... our journey doesn't end here, let's build something new now!</p>
 </article>
           </div>
